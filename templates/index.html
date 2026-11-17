@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f6f7">
+  <title>Бүртгэл | Хэрэглэгчийн бүртгэл</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Нүүр хуудас">
+        <span class="brand-mark">Б</span>
+        <span>Бүртгэл<span class="brand-period">.</span></span>
+      </a>
+      <span class="secure-note"><span class="status-dot"></span> Энгийн, найдвартай бүртгэл</span>
+    </header>
+
+    <section class="content">
+      <div class="intro">
+        <p class="eyebrow">ХЭРЭГЛЭГЧИЙН БҮРТГЭЛ</p>
+        <h1>Тавтай морил.</h1>
+        <p class="intro-copy">Бүртгэлийн мэдээллээ оруулна уу. Таны мэдээллийг бүртгэлийн жагсаалтад хадгална.</p>
+      </div>
+
+      <section class="form-card" aria-labelledby="form-title">
+        {% if success %}
+          <div class="notice success" role="status">
+            <span class="notice-icon" aria-hidden="true">✓</span>
+            <div>
+              <strong>Бүртгэл амжилттай хийгдлээ</strong>
+              <p>Таны мэдээлэл Register.xlsx файлд хадгалагдлаа.</p>
+            </div>
+          </div>
+        {% elif error %}
+          <div class="notice error" role="alert">
+            <span class="notice-icon" aria-hidden="true">!</span>
+            <div><strong>Бүртгэл амжилтгүй</strong><p>{{ error }}</p></div>
+          </div>
+        {% endif %}
+
+        <div class="card-heading">
+          <div>
+            <h2 id="form-title">Мэдээллээ бүртгүүлэх</h2>
+            <p>Одтой талбаруудыг заавал бөглөнө.</p>
+          </div>
+          <span class="step-label">01 / 01</span>
+        </div>
+
+        <form method="post" action="{{ url_for('register') }}">
+          <div class="field-row">
+            <div class="field">
+              <label for="surname">Овог <span>*</span></label>
+              <input id="surname" name="surname" type="text" autocomplete="family-name"
+                     placeholder="Овгоо оруулна уу" value="{{ values.surname }}" required>
+            </div>
+            <div class="field">
+              <label for="given_name">Нэр <span>*</span></label>
+              <input id="given_name" name="given_name" type="text" autocomplete="given-name"
+                     placeholder="Нэрээ оруулна уу" value="{{ values.given_name }}" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="phone">Утасны дугаар <span>*</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel"
+                   placeholder="Жишээ: 99112233" value="{{ values.phone }}" required>
+          </div>
+
+          <div class="field">
+            <label for="email">Имэйл хаяг <span>*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email"
+                   placeholder="name@example.com" value="{{ values.email }}" required
+                   aria-describedby="email-help">
+            <p class="field-help" id="email-help">
+              <span class="help-icon" aria-hidden="true">i</span>
+              Формат: <code>нэр@домэйн.өргөтгөл</code> — жишээ нь <code>bat@example.com</code>
+            </p>
+          </div>
+
+          <button type="submit">Бүртгүүлэх <span aria-hidden="true">→</span></button>
+        </form>
+
+        <p class="privacy-note"><span aria-hidden="true">▣</span> Таны мэдээлэл бүртгэлийн Excel файлд хадгалагдана.</p>
+      </section>
+      <footer>Мэдээллээ үнэн зөв бөглөсөнд баярлалаа.</footer>
+    </section>
+  </main>
+</body>
+</html>
